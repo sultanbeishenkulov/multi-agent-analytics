@@ -1,4 +1,5 @@
 services:
+
   db:
     image: postgres:16-alpine
     container_name: analytics-db
@@ -16,6 +17,21 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
+  api:
+    build: .
+    container_name: analytics-api
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://analyst:analyst_pass@db:5432/analytics
+      OLLAMA_HOST: http://host.docker.internal:11434
+    volumes:
+      - ./data:/app/data   # persist memory.db alongside schema files
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
 
 volumes:
   pgdata:
