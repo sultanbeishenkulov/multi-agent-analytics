@@ -34,6 +34,15 @@ mlartifacts/
 # Docker
 pgdata/
 
+# Benchmark results
+benchmark/results/
+
+# FAISS vector index (rebuilt at runtime)
+data/faiss_index/
+
+# Session memory
+data/memory.db
+
 # OS
 .DS_Store
 Thumbs.db
